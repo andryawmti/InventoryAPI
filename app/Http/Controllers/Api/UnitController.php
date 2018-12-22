@@ -26,8 +26,8 @@ class UnitController extends Controller
     public function add()
     {
         try {
-            Unit::create(request()->all());
-            return ApiResponse::success('Unit Successfully Added');
+            $unit = Unit::create(request()->all());
+            return ApiResponse::success('Unit Successfully Added', ['unit_id' => $unit->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }
@@ -36,8 +36,8 @@ class UnitController extends Controller
     public function update(Unit $unit)
     {
         try {
-            $unit::update(request()->all());
-            return ApiResponse::success('Unit Successfully Added');
+            $unit->update(request()->all());
+            return ApiResponse::success('Unit Successfully Added', ['unit_id' => $unit->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }
@@ -47,7 +47,7 @@ class UnitController extends Controller
     {
         try {
             $unit->delete();
-            return ApiResponse::success('Unit Successfully Deleted');
+            return ApiResponse::success('Unit Successfully Deleted', ['unit_id' => $unit->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }

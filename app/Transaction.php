@@ -33,4 +33,19 @@ class Transaction extends Model
     {
         return $this->hasMany('App\TransactionItem');
     }
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Customer');
+    }
+
+    public function scopeOfCategory($q, $category_id)
+    {
+        return $q->where('transaction_category_id', $category_id);
+    }
+
+    public function scopeOfCustomer($q, $customer_id)
+    {
+        return $q->where('customer_id', $customer_id);
+    }
 }
