@@ -20,14 +20,14 @@ class ProductController extends Controller
 
     public function getAll()
     {
-        return ApiResponse::data(Product::all()->toArray());
+        return ApiResponse::data(Product::getAll());
     }
 
     public function add()
     {
         try {
-            Product::create(request()->all());
-            return ApiResponse::success('Product Successfully Added');
+            $product = Product::create(request()->all());
+            return ApiResponse::success('Product Successfully Added', ['product_id' => $product->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }
@@ -37,7 +37,7 @@ class ProductController extends Controller
     {
         try{
             $product->update(request()->all());
-            return ApiResponse::success('Product Successfully Updated');
+            return ApiResponse::success('Product Successfully Updated', ['product_id' => $product->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }
@@ -47,7 +47,7 @@ class ProductController extends Controller
     {
         try {
             $product->delete();
-            return ApiResponse::success('Product Successfully Deleted');
+            return ApiResponse::success('Product Successfully Deleted', ['product_id' => $product->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }

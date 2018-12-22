@@ -27,8 +27,8 @@ class CustomerController extends Controller
     public function add()
     {
         try{
-            Customer::create(request()->all());
-            return ApiResponse::success('Customer Successfully Added');
+            $customer = Customer::create(request()->post());
+            return ApiResponse::success('Customer Successfully Added',['customer_id' => $customer->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }
@@ -37,8 +37,8 @@ class CustomerController extends Controller
     public function update(Customer $customer)
     {
         try{
-            $customer->update(request()->all());
-            return ApiResponse::success('Customer Successfully Updated');
+            $customer->update(request()->post());
+            return ApiResponse::success('Customer Successfully Updated', ['customer_id' => $customer->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }
@@ -48,7 +48,7 @@ class CustomerController extends Controller
     {
         try{
             $customer->delete();
-            return ApiResponse::success('Customer Successfully Deleted');
+            return ApiResponse::success('Customer Successfully Deleted', ['customer_id' => $customer->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }
