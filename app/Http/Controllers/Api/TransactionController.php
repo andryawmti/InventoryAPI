@@ -125,8 +125,9 @@ class TransactionController extends Controller
     public function delete(Transaction $transaction)
     {
         try {
+            TransactionItem::deleteByTransactionId($transaction->id);
             $transaction->delete();
-            return ApiResponse::success('Transaction Successfully Deleted');
+            return ApiResponse::success('Transaction Successfully Deleted', ['transaction_id' => $transaction->id]);
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }

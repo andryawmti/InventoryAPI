@@ -21,4 +21,10 @@ class TransactionItem extends Model
                   WHERE ti.transaction_id = '$transaction_id' ORDER BY ti.id ASC";
         return DB::select($query);
     }
+
+    public static function deleteByTransactionId($transaction_id)
+    {
+        return TransactionItem::where('transaction_id', $transaction_id)
+                                ->delete();
+    }
 }

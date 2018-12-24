@@ -47,7 +47,7 @@ class TransactionCategoryController extends Controller
     {
         try {
             $transactionCategory->delete();
-            return ApiResponse::success('Transaction Category Successfully Deleted');
+            return ApiResponse::success('Transaction Category Successfully Deleted', ['transaction_category_id' => $transactionCategory->id]);
         } catch(\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }
