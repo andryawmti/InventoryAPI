@@ -6,7 +6,7 @@
             <!-- START sidebar nav-->
             <ul class="sidebar-nav">
                 <!-- START user info-->
-                <li class="has-user-block">
+                {{--<li class="has-user-block">
                     <div class="show" id="user-block">
                         <div class="item user-block">
                             <!-- User picture-->
@@ -23,7 +23,7 @@
                             </div>
                         </div>
                     </div>
-                </li>
+                </li>--}}
                 <!-- END user info-->
                 <!-- Iterates over all sidebar items-->
                 <li class="nav-heading ">
@@ -42,6 +42,7 @@
                     </a>
                     <ul class="sidebar-nav sidebar-subnav collapse" id="manage">
                         <li class="sidebar-subnav-header">Manage</li>
+                        @can('isAdmin')
                         <li>
                             <a href="{{route('user-group.index')}}" title="User Group">
                                 <span>User Group</span>
@@ -52,6 +53,7 @@
                                 <span>User</span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </li>
             </ul>

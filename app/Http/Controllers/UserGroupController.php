@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\MyHttpResponse;
 use App\UserGroup;
-use Illuminate\Http\Request;
 
 class UserGroupController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:web', 'can:isAdmin']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,17 +29,18 @@ class UserGroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
+        request()->validate([
+            'name' => ['required', 'min:3'],
+        ]);
 
-
-        UserGroup::create(
-            request()->validate([
-                'name' => ['required', 'min:3'],
-            ])
-        );
-
-        return redirect()->route('user_group');
+        try {
+            UserGroup::create(request()->post());
+            return MyHttpResponse::storeResponse(true, 'User Group Successfully Created', 'user-group.index');
+        } catch (\Exception $e) {
+            return MyHttpResponse::storeResponse(false, $e->getMessage(), 'user-group.index');
+        }
     }
 
     /**
@@ -67,13 +73,16 @@ class UserGroupController extends Controller
      */
     public function update(UserGroup $userGroup)
     {
-        $userGroup->update(
-            request()->validate([
-                'name' => ['required', 'min:3']
-            ])
-        );
+        request()->validate([
+            'name' => ['required', 'min:3']
+        ]);
 
-        return redirect()->route('user-group.show', ['id' => $userGroup->id]);
+        try {
+            $userGroup->update(request()->post());
+            return MyHttpResponse::updateResponse(true, 'User Group Successfully Updated', 'user-group.show', $userGroup->id);
+        } catch (\Exception $e) {
+            return MyHttpResponse::updateResponse(false, $e->getMessage(), 'user-group.show', $userGroup->id);
+        }
     }
 
     /**
@@ -85,7 +94,11 @@ class UserGroupController extends Controller
      */
     public function destroy(UserGroup $userGroup)
     {
-        $userGroup->delete();
-        return redirect()->route('user-group.index');
+        try {
+            $userGroup->delete();
+            return MyHttpResponse::deleteResponse(true, 'User Group Successfully Deleted', 'user-group.index');
+        } catch (\Exception $e) {
+            return MyHttpResponse::deleteResponse(false, $e->getMessage(), 'user-group.index');
+        }
     }
 }

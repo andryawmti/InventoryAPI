@@ -31,4 +31,8 @@ Route::resource('user', 'UserController');
 /**
  * ProfileController
  */
-Route::get('profile', 'ProfileController@get')->name('profile');
+Route::prefix('profile')->group(function () {
+    Route::get('/', 'ProfileController@index')->name('profile');
+    Route::put('/{user}', 'ProfileController@profileUpdate')->name('profile.update');
+    Route::post('/{user}/change-password', 'ProfileController@changePassword')->name('profile.change-password');
+});

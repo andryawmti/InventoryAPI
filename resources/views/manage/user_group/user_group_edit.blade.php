@@ -16,7 +16,16 @@
     <!-- Page content-->
     <div class="content-wrapper">
         <div class="content-heading">
-            <div>Manage User Group</div>
+            <div>
+                Manage User Group
+                <ol class="breadcrumb breadcrumb px-0 pb-0">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="{{ route('user-group.index') }}">User Group</a>
+                    </li>
+                    <li class="breadcrumb-item active">Edit</li>
+                </ol>
+            </div>
         </div>
         <div class="container-fluid">
             <!-- DATATABLE DEMO 1-->

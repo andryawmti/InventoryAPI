@@ -1,5 +1,14 @@
 @if($errors->all())
-    <div class="col-md-6 offset-3 alert alert-danger alert-dismissible fade show">
+    <style>
+        #form-validation-notif {
+            position: fixed;
+            top: 50%;
+            width: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+    </style>
+    <div id="form-validation-notif" class="alert alert-danger alert-dismissible fade show">
         <button class="close" type="button" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">×</span>
         </button>

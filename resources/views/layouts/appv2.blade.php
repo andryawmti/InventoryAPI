@@ -61,6 +61,58 @@
 <!-- Axios-->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<!-- SweetAlert -->
+<script src="{{asset('angleadmin/js/sweetalert.min.js')}}"></script>
+
+<script>
+    $(document).ready(function () {
+                @if(session('message'))
+        let success = "{{ session('success') }}";
+        let msg = "{{ session('message') }}";
+        let title = "{{ session('title') }}";
+        if (!success) {
+            showErrorMessge('Not '+title, msg);
+        } else {
+            showSuccessMessge(title, msg);
+        }
+        @endif
+    });
+
+    /**
+     * create sweetalert message
+     */
+
+    function showErrorMessge(title, msg) {
+        swal({
+            icon: 'error',
+            title: title,
+            text: msg
+        })
+    }
+
+    function showSuccessMessge(title,msg) {
+        swal({
+            icon: 'success',
+            title: title,
+            text: msg
+        })
+    }
+
+    function deleteItem(id) {
+        swal({
+            title: "Are you sure?",
+            text: "You will delete this data permanently!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                document.getElementById('delete_'+id).submit();
+            }
+        });
+    }
+</script>
+
 @yield('page_js')
 
 <!-- =============== APP SCRIPTS ===============-->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\MyHttpResponse;
 use App\User;
 use App\UserGroup;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:web');
+        $this->middleware(['auth:web', 'can:isAdmin']);
     }
 
     /**
@@ -51,15 +52,18 @@ class UserController extends Controller
             'password' => ['required', 'min:6']
         ]);
 
-        $user = new User();
-        $user->user_group_id = request('user_group_id');
-        $user->name = request('name');
-        $user->email = request('email');
-        $user->password = Hash::make(request('password'));
-        $user->save();
-        $user->generateApiToken();
-
-        return redirect()->route('user.index');
+        try {
+            $user = new User();
+            $user->user_group_id = request('user_group_id');
+            $user->name = request('name');
+            $user->email = request('email');
+            $user->password = Hash::make(request('password'));
+            $user->save();
+            $user->generateApiToken();
+            return MyHttpResponse::storeResponse(true, 'User Successfully Created', 'user.index');
+        } catch (\Exception $e) {
+            return MyHttpResponse::storeResponse(false, $e->getMessage(), 'user.index');
+        }
     }
 
     /**
@@ -91,7 +95,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(User $user)
     {
         request()->validate([
             'user_group_id' => ['required'],
@@ -100,13 +104,18 @@ class UserController extends Controller
             'password' => ['required', 'min:6']
         ]);
 
-        $user->user_group_id = request('user_group_id');
-        $user->name = request('name');
-        $user->email = request('email');
-        $user->password = Hash::make(request('password'));
-        $user->save();
-
-        return redirect()->route('user.show', ['id' => $user->id]);
+        try {
+            $user->user_group_id = request('user_group_id');
+            $user->name = request('name');
+            $user->email = request('email');
+            if ($user->password != request('password')) {
+                $user->password = Hash::make(request('password'));
+            }
+            $user->save();
+            return MyHttpResponse::updateResponse(true, 'User Successfully Updated', 'user.show', $user->id);
+        } catch (\Exception $e) {
+            return MyHttpResponse::updateResponse(false, $e->getMessage(), 'user.show', $user->id);
+        }
     }
 
     /**
@@ -118,8 +127,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        return redirect()->route('user.index');
+        try {
+            $user->delete();
+            return MyHttpResponse::deleteResponse(true, 'User Successfully Deleted', 'user.index');
+        } catch (\Exception $e) {
+            return MyHttpResponse::deleteResponse(false, $e->getMessage(), 'user.index');
+        }
     }
 
     public function generateToken(User $user)
