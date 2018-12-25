@@ -53,4 +53,9 @@ class CustomerController extends Controller
             return ApiResponse::error($e->getMessage());
         }
     }
+
+    public function countOfCustomer()
+    {
+        return Customer::count();
+    }
 }

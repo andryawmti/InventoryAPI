@@ -53,4 +53,9 @@ class DistributorController extends Controller
             return ApiResponse::error($e->getMessage());
         }
     }
+
+    public function countOfDistributor()
+    {
+        return Distributor::count();
+    }
 }

@@ -52,4 +52,9 @@ class ProductController extends Controller
             return ApiResponse::error($e->getMessage());
         }
     }
+
+    public function countOfProduct()
+    {
+        return Product::count();
+    }
 }
