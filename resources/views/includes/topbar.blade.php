@@ -6,7 +6,8 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#/">
                 <div class="brand-logo">
-                    <img class="img-fluid" src="{{asset('angleadmin/img/logo.html')}}" alt="App Logo">
+                    {{--<img class="img-fluid" src="{{asset('angleadmin/img/logo.html')}}" alt="App Logo">--}}
+                    <b class="text-white">Inventory API v0.1</b>
                 </div>
                 <div class="brand-logo-collapsed">
                     <img class="img-fluid" src="{{asset('angleadmin/img/logo-single.png')}}" alt="App Logo">
@@ -42,7 +43,7 @@
                         <div class="list-group">
                             <!-- list item-->
                             <div class="list-group-item list-group-item-action">
-                                <a href="#" style="text-decoration: none">
+                                <a href="{{ route('profile') }}" style="text-decoration: none">
                                     <div class="media">
                                         <div class="align-self-start mr-2">
                                             <em class="fa fa-user"></em>

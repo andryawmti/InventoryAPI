@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\MyHttpResponse;
+use App\Rules\ValidatePassword;
 use App\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -12,15 +14,42 @@ class ProfileController extends Controller
         $this->middleware('auth:web');
     }
 
-    public function get()
+    public function index()
     {
-        $user = User::find(Auth::user()->id);
-        return $user->toArray();
-        return view('partials.profile', ['user' => $user]);
+        return view('partials.profile');
     }
 
-    public function update(User $user)
+    public function profileUpdate(User $user)
     {
-        return redirect()->route('profile', ['user' => $user->id]);
+        try {
+            request()->validate([
+                'name' => ['required'],
+                'email' => ['required', 'email'],
+            ]);
+
+            $user->name = request('name');
+            $user->email = request('email');
+            $user->save();
+            return MyHttpResponse::updateResponse(true, 'Profile Successfully Updated', 'profile');
+        } catch (\Exception $e) {
+            return MyHttpResponse::updateResponse(false, $e->getMessage(), 'home');
+        }
+    }
+
+    public function changePassword(User $user)
+    {
+        request()->validate([
+            'current_password' => ['required', new ValidatePassword($user)],
+            'new_password' => ['required', 'min:6', 'max:35', 'confirmed'],
+            'new_password_confirmation' => ['required']
+        ]);
+
+        try {
+            $user->password = Hash::make(request('new_password'));
+            $user->save();
+            return MyHttpResponse::updateResponse(true, 'Password Successfully Updated', 'profile');
+        } catch (\Exception $e) {
+            return MyHttpResponse::updateResponse(false, $e->getMessage(), 'profile');
+        }
     }
 }

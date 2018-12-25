@@ -16,7 +16,14 @@
     <!-- Page content-->
     <div class="content-wrapper">
         <div class="content-heading">
-            <div>Manage User</div>
+            <div>
+                Manage User
+                <ol class="breadcrumb breadcrumb px-0 pb-0">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">User</li>
+                </ol>
+            </div>
         </div>
         <div class="container-fluid">
             <!-- DATATABLE DEMO 1-->
@@ -37,6 +44,7 @@
                             <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>User Group</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Created At</th>
@@ -45,8 +53,10 @@
                             </thead>
                             <tbody>
                             @foreach($users as $u)
+                                @if($u->id != 1 && ($u->id != auth::user()->id))
                                 <tr class="gradeX">
                                     <td>{{ $u->id }}</td>
+                                    <td>{{ $u->userGroup->name }}</td>
                                     <td>{{ $u->name }}</td>
                                     <td>{{ $u->email }}</td>
                                     <td>{{ date('d-M-Y', strtotime($u->created_at)) }}</td>
@@ -56,15 +66,16 @@
                                                 <a class="btn btn-xs btn-info" href="{{route('user.show', ['id' => $u->id])}}"><em class="fa fa-edit"></em></a>
                                             </div>
                                             <div class="col-md-1">
-                                                <form method="post" action="{{route('user.destroy',['id' => $u->id])}}">
+                                                <form id="delete_{{$u->id}}" method="post" action="{{route('user.destroy',['id' => $u->id])}}">
                                                     @csrf
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="btn btn-xs btn-info" user-id="{{$u->id}}"><em class="fa fa-trash"></em></button>
+                                                    <button type="button" onclick="deleteItem(this.id)" class="btn btn-xs btn-info" id="{{$u->id}}"><em class="fa fa-trash"></em></button>
                                                 </form>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
