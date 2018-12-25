@@ -53,4 +53,8 @@ class ProductCategoryController extends Controller
         }
     }
 
+    public function countOfProductCategory()
+    {
+        return ProductCategory::count();
+    }
 }

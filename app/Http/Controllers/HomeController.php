@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Query\GetTransactionStatistic;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,5 +25,10 @@ class HomeController extends Controller
     public function index()
     {
         return view('dashboard.home');
+    }
+
+    public function test()
+    {
+        return (new GetTransactionStatistic())->get();
     }
 }

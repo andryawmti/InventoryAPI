@@ -22,7 +22,7 @@
         <!-- START card-->
         <div class="card card-flat">
             <div class="card-header text-center">
-               <h3>Login</h3>
+               <h3>API Management Login</h3>
             </div>
             <div class="card-body">
                 <form id="loginForm" class="mb-3" action="{{route('login')}}" method="post" role="form" novalidate="">
@@ -49,7 +49,7 @@
                                 <input type="checkbox" value="" name="remember">
                                 <span class="fa fa-check"></span>Remember Me</label>
                         </div>
-                        <div class="float-right"><a class="text-muted" href="#">Forgot your password?</a>
+                        <div class="float-right">{{--<a class="text-muted" href="#">Forgot your password?</a>--}}
                         </div>
                     </div>
                     <button class="btn btn-block btn-primary mt-3" type="submit">Login</button>
@@ -62,9 +62,9 @@
             <span>&copy;</span>
             <span>{{date('Y')}}</span>
             <span>-</span>
-            <span>Inventory System</span>
-            <br>
-            <span>With Angleadmin Theme</span>
+            <span>Inventory System API v0.1</span>
+            {{--<br>
+            <span>With Angleadmin Theme</span>--}}
         </div>
     </div>
 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Classes\ApiResponse;
+use App\Classes\Query\GetTransactionStatistic;
 use App\Classes\Query\GetTransaction;
 use App\Transaction;
 use App\Http\Controllers\Controller;
@@ -131,5 +132,16 @@ class TransactionController extends Controller
         } catch (\Exception $e) {
             return ApiResponse::error($e->getMessage());
         }
+    }
+
+    public function countOfTransaction()
+    {
+        return Transaction::count();
+    }
+
+    public function getTransactionStatistic($transaction_category_id)
+    {
+        $query = new GetTransactionStatistic();
+        return ApiResponse::data($query->ofCategory($transaction_category_id)->get());
     }
 }

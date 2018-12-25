@@ -52,4 +52,9 @@ class TransactionCategoryController extends Controller
             return ApiResponse::error($e->getMessage());
         }
     }
+
+    public function countOfTransactionCategory()
+    {
+        return TransactionCategory::count();
+    }
 }

@@ -52,4 +52,9 @@ class UnitController extends Controller
             return ApiResponse::error($e->getMessage());
         }
     }
+
+    public function countOfUnit()
+    {
+        return Unit::count();
+    }
 }
