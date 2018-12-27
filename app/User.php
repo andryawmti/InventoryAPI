@@ -49,4 +49,9 @@ class User extends Authenticatable
         $this->save();
         return $this->api_token;
     }
+
+    public static function findOneByApiToken($token)
+    {
+        return User::where('api_token', $token)->first();
+    }
 }

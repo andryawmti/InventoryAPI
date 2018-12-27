@@ -42,6 +42,11 @@
                     </a>
                     <ul class="sidebar-nav sidebar-subnav collapse" id="manage">
                         <li class="sidebar-subnav-header">Manage</li>
+                        <li class=" ">
+                            <a href="{{ route('profile') }}" title="User">
+                                <span>Profile Settings</span>
+                            </a>
+                        </li>
                         @can('isAdmin')
                         <li>
                             <a href="{{route('user-group.index')}}" title="User Group">
