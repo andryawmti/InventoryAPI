@@ -30,16 +30,20 @@
             <div class="card card-default" role="tabpanel">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active show" href="#user" aria-controls="home" role="tab" data-toggle="tab" aria-selected="true">
+                        <a class="nav-link active show" href="#profile" aria-controls="profile" role="tab" data-toggle="tab" aria-selected="true">
                             <em class="fa fa-user fa-fw"></em>Profile</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="#change-password" aria-controls="profile" role="tab" data-toggle="tab" aria-selected="false">
+                        <a class="nav-link" href="#change-password" aria-controls="change-password" role="tab" data-toggle="tab" aria-selected="false">
                             <em class="fa fa-lock fa-fw"></em>Change Password</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="#api-token" aria-controls="api-token" role="tab" data-toggle="tab" aria-selected="false">
+                            <em class="fa fa-key fa-fw"></em>Api Token</a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="user" role="tabpanel">
+                    <div class="tab-pane active" id="profile" role="tabpanel">
                         <div class="card-body">
                             <form class="form-horizontal" method="post" action="{{route('profile.update', ['id' => auth::user()->id])}}" enctype="multipart/form-data">
                                 @csrf
@@ -105,6 +109,26 @@
                             </form>
                         </div>
                     </div>
+                    <div class="tab-pane" id="api-token" role="tabpanel">
+                        <div class="card-body">
+                            <form class="form-horizontal" method="post" action="#">
+                                @csrf
+                                <fieldset>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">Api Token</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" name="api_token" type="text" value="{{ auth::user()->api_token }}" required>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <button type="button" id="generate-token" class="btn btn-warning">Generate</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,9 +150,19 @@
     <script src="{{asset('angleadmin/vendor/datatables.net-keytable/js/dataTables.keyTable.js')}}"></script>
     <script src="{{asset('angleadmin/vendor/datatables.net-responsive/js/dataTables.responsive.js')}}"></script>
     <script src="{{asset('angleadmin/vendor/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
-    <script src="{{asset('angleadmin/vendor/dropzone/dist/dropzone.js')}}"></script>
+    {{--<script src="{{asset('angleadmin/vendor/dropzone/dist/dropzone.js')}}"></script>--}}
     <script>
-        //let myDropzone = new Dropzone
+        $('#generate-token').click(() => {
+            if (confirm('Are you sure?')) {
+                axios.get("{{route('profile.generate-token')}}")
+                    .then(res => {
+                        $("input[name=api_token]").val(res.data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+        });
     </script>
 
     @include('includes.datatable_script')

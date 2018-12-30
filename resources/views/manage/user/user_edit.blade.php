@@ -111,13 +111,15 @@
 
     <script>
         $('#regenerate-token').click(e => {
-            axios.get("{{route('user.generate-token', ['user' => $user->id])}}")
-                .then(res => {
-                    $("input[name=api_token]").val(res.data);
-                })
-                .catch(err => {
-                    console.log(err)
-                });
+            if (confirm('Are you sure?')) {
+                axios.get("{{route('user.generate-token', ['user' => $user->id])}}")
+                    .then(res => {
+                        $("input[name=api_token]").val(res.data);
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
+            }
         });
     </script>
 @endsection

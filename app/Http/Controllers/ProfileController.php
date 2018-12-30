@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\MyHttpResponse;
 use App\Rules\ValidatePassword;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -51,5 +52,10 @@ class ProfileController extends Controller
         } catch (\Exception $e) {
             return MyHttpResponse::updateResponse(false, $e->getMessage(), 'profile');
         }
+    }
+
+    public function generateToken()
+    {
+        return  auth::user()->generateApiToken();
     }
 }
