@@ -59,22 +59,23 @@
 <script src="{{asset('angleadmin/vendor/jquery-localize/dist/jquery.localize.js')}}"></script>
 
 <!-- Axios-->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{{--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>--}}
+<script src="{{asset('angleadmin/js/axios.min.js')}}"></script>
 
 <!-- SweetAlert -->
 <script src="{{asset('angleadmin/js/sweetalert.min.js')}}"></script>
 
 <script>
     $(document).ready(function () {
-                @if(session('message'))
-        let success = "{{ session('success') }}";
-        let msg = "{{ session('message') }}";
-        let title = "{{ session('title') }}";
-        if (!success) {
-            showErrorMessge('Not '+title, msg);
-        } else {
-            showSuccessMessge(title, msg);
-        }
+        @if(session('message'))
+            let success = "{{ session('success') }}";
+            let msg = "{{ session('message') }}";
+            let title = "{{ session('title') }}";
+            if (!success) {
+                showErrorMessge('Not '+title, msg);
+            } else {
+                showSuccessMessge(title, msg);
+            }
         @endif
     });
 

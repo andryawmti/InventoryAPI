@@ -17,18 +17,10 @@
             <div>Dashboard
                 <small data-localize="dashboard.WELCOME"></small>
             </div>
-            <!-- START Language list-->
-            <div class="ml-auto">
-                <div class="btn-group">
-                    <button class="btn btn-secondary dropdown-toggle dropdown-toggle-nocaret" type="button" data-toggle="dropdown">English</button>
-                    <div class="dropdown-menu dropdown-menu-right-forced animated fadeInUpShort" role="menu"><a class="dropdown-item" href="#" data-set-lang="en">English</a><a class="dropdown-item" href="#" data-set-lang="es">Spanish</a>
-                    </div>
-                </div>
-            </div>
-            <!-- END Language list-->
         </div>
         <!-- START cards box-->
         <div class="row">
+            @if(auth::user()->user_group_id == 1)
             <div class="col-xl-3 col-md-6">
                 <!-- START card-->
                 <div class="card flex-row align-items-center align-items-stretch border-0">
@@ -53,6 +45,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <!-- START card-->
                 <div class="card flex-row align-items-center align-items-stretch border-0">
@@ -130,7 +123,7 @@
     <!-- MOMENT JS-->
     <script src="{{asset('angleadmin/vendor/moment/min/moment-with-locales.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    4 <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script>
         $(function () {
             let data = {!! json_encode($api_call_stats) !!};

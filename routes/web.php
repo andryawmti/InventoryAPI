@@ -35,4 +35,5 @@ Route::prefix('profile')->group(function () {
     Route::get('/', 'ProfileController@index')->name('profile');
     Route::put('/{user}', 'ProfileController@profileUpdate')->name('profile.update');
     Route::post('/{user}/change-password', 'ProfileController@changePassword')->name('profile.change-password');
+    Route::get('/generate-token', 'ProfileController@generateToken')->name('profile.generate-token');
 });
