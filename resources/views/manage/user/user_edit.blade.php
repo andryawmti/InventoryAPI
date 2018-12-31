@@ -75,7 +75,14 @@
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label">Api Token</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="api_token" type="text" value="{{ $user->api_token }}" readonly>
+                                    <div class="input-group date">
+                                        <input class="form-control" name="api_token" type="text" value="{{ auth::user()->api_token }}" readonly>
+                                        <span class="input-group-append input-group-addon">
+                                            <button id="copy-token" type="button" class="btn btn-info btn-xs pull-right">
+                                                <span class="fa fa-copy"></span> <b id="btn-title">Copy</b>
+                                            </button>
+                                        </span>
+                                    </div>
                                     <div class="mar_top1"></div>
                                     <button type="button" id="regenerate-token" class="btn btn-xs btn-warning">Regenerate</button>
                                 </div>
@@ -120,6 +127,11 @@
                         console.log(err)
                     });
             }
+        });
+        $('#copy-token').click(()=>{
+            $("input[name=api_token]").select();
+            document.execCommand('copy');
+            $('#copy-token #btn-title').html('Copied');
         });
     </script>
 @endsection

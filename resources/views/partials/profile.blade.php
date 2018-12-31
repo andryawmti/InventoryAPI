@@ -114,10 +114,17 @@
                             <form class="form-horizontal" method="post" action="#">
                                 @csrf
                                 <fieldset>
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">Api Token</label>
+                                    <div class="form-group row mb-2">
+                                        <label class="col-md-2 col-form-label mb-2">Api Token</label>
                                         <div class="col-md-10">
-                                            <input class="form-control" name="api_token" type="text" value="{{ auth::user()->api_token }}" required>
+                                            <div class="input-group date">
+                                                <input class="form-control" name="api_token" type="text" value="{{ auth::user()->api_token }}" readonly>
+                                                <span class="input-group-append input-group-addon">
+                                                    <button id="copy-token" type="button" class="btn btn-info btn-xs pull-right">
+                                                        <span class="fa fa-copy"></span> <b id="btn-title">Copy</b>
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -162,6 +169,12 @@
                         console.log(err);
                     });
             }
+        });
+
+        $('#copy-token').click(()=>{
+            $("input[name=api_token]").select();
+            document.execCommand('copy');
+            $('#copy-token #btn-title').html('Copied');
         });
     </script>
 
